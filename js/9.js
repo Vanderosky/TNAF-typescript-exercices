@@ -113,7 +113,6 @@ function startTheApp(callback) {
     });
 }
 startTheApp((e) => {
-    console.log();
     if (e) {
         console.log(`Error: "${e.message}", but it's fine, sometimes errors are inevitable.`);
     }
