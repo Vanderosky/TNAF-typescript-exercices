@@ -58,36 +58,22 @@ const users: User[] = [
   { type: "user", name: "Kate Müller", age: 23, occupation: "Astronaut" },
 ];
 
-export type ApiResponse<T> = unknown;
+export type ApiResponse<T> =
+  | { status: "success"; data: T }
+  | { status: "error"; error: string };
 
-type AdminsApiResponse =
-  | {
-      status: "success";
-      data: Admin[];
-    }
-  | {
-      status: "error";
-      error: string;
-    };
-
-export function requestAdmins(callback: (response: AdminsApiResponse) => void) {
+export function requestAdmins(
+  callback: (response: ApiResponse<Admin[]>) => void
+) {
   callback({
     status: "success",
     data: admins,
   });
 }
 
-type UsersApiResponse =
-  | {
-      status: "success";
-      data: User[];
-    }
-  | {
-      status: "error";
-      error: string;
-    };
-
-export function requestUsers(callback: (response: UsersApiResponse) => void) {
+export function requestUsers(
+  callback: (response: ApiResponse<User[]>) => void
+) {
   callback({
     status: "success",
     data: users,
@@ -95,7 +81,7 @@ export function requestUsers(callback: (response: UsersApiResponse) => void) {
 }
 
 export function requestCurrentServerTime(
-  callback: (response: unknown) => void
+  callback: (response: ApiResponse<number>) => void
 ) {
   callback({
     status: "success",
@@ -104,7 +90,7 @@ export function requestCurrentServerTime(
 }
 
 export function requestCoffeeMachineQueueLength(
-  callback: (response: unknown) => void
+  callback: (response: ApiResponse<number>) => void
 ) {
   callback({
     status: "error",
@@ -129,8 +115,6 @@ function startTheApp(callback: (error: Error | null) => void) {
       return callback(new Error(adminsResponse.error));
     }
 
-    console.log();
-
     requestUsers((usersResponse) => {
       console.log("Users:");
       if (usersResponse.status === "success") {
@@ -139,24 +123,20 @@ function startTheApp(callback: (error: Error | null) => void) {
         return callback(new Error(usersResponse.error));
       }
 
-      console.log();
-
       requestCurrentServerTime((serverTimeResponse) => {
         console.log("Server time:");
         if (serverTimeResponse.status === "success") {
           console.log(
-            `   ${new Date(serverTimeResponse.data).toLocaleString()}`
+            `${new Date(serverTimeResponse.data).toLocaleString()}`
           );
         } else {
           return callback(new Error(serverTimeResponse.error));
         }
 
-        console.log();
-
         requestCoffeeMachineQueueLength((coffeeMachineQueueLengthResponse) => {
           console.log("Coffee machine queue length:");
           if (coffeeMachineQueueLengthResponse.status === "success") {
-            console.log(`   ${coffeeMachineQueueLengthResponse.data}`);
+            console.log(`${coffeeMachineQueueLengthResponse.data}`);
           } else {
             return callback(new Error(coffeeMachineQueueLengthResponse.error));
           }

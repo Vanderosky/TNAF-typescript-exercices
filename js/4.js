@@ -18,26 +18,21 @@ Exercise:
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logPerson = exports.isUser = exports.isAdmin = exports.persons = void 0;
 exports.persons = [
-    {
-        type: "user",
-        name: "Max Mustermann",
-        age: 25,
-        occupation: "Chimney sweep",
-    },
-    { type: "admin", name: "Jane Doe", age: 32, role: "Administrator" },
-    { type: "user", name: "Kate Müller", age: 23, occupation: "Astronaut" },
-    { type: "admin", name: "Bruce Willis", age: 64, role: "World saver" },
+    { type: 'user', name: 'Max Mustermann', age: 25, occupation: 'Chimney sweep' },
+    { type: 'admin', name: 'Jane Doe', age: 32, role: 'Administrator' },
+    { type: 'user', name: 'Kate Müller', age: 23, occupation: 'Astronaut' },
+    { type: 'admin', name: 'Bruce Willis', age: 64, role: 'World saver' }
 ];
 function isAdmin(person) {
-    return person.type === "admin";
+    return person.type === 'admin';
 }
 exports.isAdmin = isAdmin;
 function isUser(person) {
-    return person.type === "user";
+    return person.type === 'user';
 }
 exports.isUser = isUser;
 function logPerson(person) {
-    let additionalInformation = "";
+    let additionalInformation = '';
     if (isAdmin(person)) {
         additionalInformation = person.role;
     }
@@ -47,10 +42,10 @@ function logPerson(person) {
     console.log(` - ${person.name}, ${person.age}, ${additionalInformation}`);
 }
 exports.logPerson = logPerson;
-console.log("Admins:");
+console.log('Admins:');
 exports.persons.filter(isAdmin).forEach(logPerson);
 console.log();
-console.log("Users:");
+console.log('Users:');
 exports.persons.filter(isUser).forEach(logPerson);
 // In case you are stuck:
 // https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates

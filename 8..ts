@@ -31,9 +31,12 @@ interface Admin {
   role: string;
 }
 
-type PowerUser = unknown;
+type PowerUser = Omit<User, "type"> &
+  Omit<Admin, "type"> & {
+    type: "powerUser";
+  };
 
-export type Person = unknown
+export type Person = User | Admin | PowerUser;
 
 export const persons: Person[] = [
   {

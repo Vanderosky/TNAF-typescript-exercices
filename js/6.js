@@ -46,11 +46,12 @@ function logPerson(person) {
     console.log(` - ${person.name}, ${person.age}, ${person.type === "admin" ? person.role : person.occupation}`);
 }
 exports.logPerson = logPerson;
+const getObjectKeys = (obj) => Object.keys(obj);
 function filterPersons(persons, personType, criteria) {
     return persons
         .filter((person) => person.type === personType)
         .filter((person) => {
-        let criteriaKeys = Object.keys(criteria);
+        let criteriaKeys = getObjectKeys(criteria);
         return criteriaKeys.every((fieldName) => {
             return person[fieldName] === criteria[fieldName];
         });
